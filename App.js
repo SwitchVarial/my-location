@@ -65,7 +65,6 @@ export default function App() {
     }
   };
 
-  console.log(marker);
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />

@@ -1,13 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  Pressable,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, View, TextInput, Pressable, Alert } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Ionicons } from "@expo/vector-icons";
 import { GOOGLE_API_KEY, GOOGLE_GEOCODING_API_URL } from "@env";
@@ -18,10 +11,6 @@ export default function App() {
   const initialDelta = 8;
   const [search, setSearch] = useState();
   const [title, setTitle] = useState("My Home");
-  const [marker, setMarker] = useState({
-    latitude: 61.92410999999999,
-    longitude: 25.748151,
-  });
   const [region, setRegion] = useState({
     latitude: 61.92410999999999,
     longitude: 25.748151,
@@ -39,18 +28,13 @@ export default function App() {
       return;
     }
     let location = await Location.getCurrentPositionAsync({});
-    const latitude = location.coords.latitude;
-    const longitude = location.coords.longitude;
+    const { latitude, longitude } = location.coords;
     setTitle("You are here");
     setRegion({
       latitude: latitude,
       longitude: longitude,
       latitudeDelta: delta,
       longitudeDelta: delta,
-    });
-    setMarker({
-      latitude: latitude,
-      longitude: longitude,
     });
   };
 
@@ -63,16 +47,11 @@ export default function App() {
       const response = await fetch(url);
       const data = await response.json();
       if (data.status !== "ZERO_RESULTS") {
-        const latitude = data.results[0].geometry.location.lat;
-        const longitude = data.results[0].geometry.location.lng;
+        const { lat, lng } = data.results[0].geometry.location;
         setTitle(data.results[0].formatted_address);
-        setMarker({
-          latitude: latitude,
-          longitude: longitude,
-        });
         setRegion({
-          latitude: latitude,
-          longitude: longitude,
+          latitude: lat,
+          longitude: lng,
           latitudeDelta: delta,
           longitudeDelta: delta,
         });
@@ -104,7 +83,7 @@ export default function App() {
             <Ionicons name="search" size={26} color="black" />
           </Pressable>
         </View>
-        <Marker coordinate={marker} title={title} />
+        <Marker coordinate={region} title={title} />
       </MapView>
     </View>
   );

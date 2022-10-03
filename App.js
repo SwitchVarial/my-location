@@ -69,21 +69,21 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <MapView style={styles.map} region={region} initialRegion={region}>
-        <View style={styles.searchContainer}>
-          <Ionicons name="location-sharp" size={26} color="black" />
-          <TextInput
-            style={styles.input}
-            onChangeText={(search) => setSearch(search)}
-            placeholder="Search with full address"
-            value={search}
-            keyboardType="default"
-          />
-          <Pressable style={styles.button} onPress={searchLocation}>
-            <Ionicons name="search" size={26} color="black" />
-          </Pressable>
-        </View>
         <Marker coordinate={region} title={title} />
       </MapView>
+      <View style={styles.searchContainer}>
+        <Ionicons name="location-sharp" size={26} color="black" />
+        <TextInput
+          style={styles.input}
+          onChangeText={(search) => setSearch(search)}
+          placeholder="Search with full address"
+          value={search}
+          keyboardType="default"
+        />
+        <Pressable style={styles.button} onPress={searchLocation}>
+          <Ionicons name="search" size={26} color="black" />
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -96,12 +96,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   searchContainer: {
-    marginTop: 45,
+    position: "absolute",
+    top: 45,
     marginHorizontal: 15,
     paddingHorizontal: 10,
     flexDirection: "row",
-    zIndex: 4, // works on ios
-    elevation: 4, // works on android
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: 10,

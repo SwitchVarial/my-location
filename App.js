@@ -27,7 +27,9 @@ export default function App() {
       Alert.alert("No permission to get location");
       return;
     }
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.High,
+    });
     const { latitude, longitude } = location.coords;
     setTitle("You are here");
     setRegion({
